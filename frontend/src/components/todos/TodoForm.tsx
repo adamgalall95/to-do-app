@@ -2,6 +2,8 @@ import { useCategories } from "../../hooks/useCategories";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createTodo } from "../../services/task-services";
+import { useQueryClient } from "@tanstack/react-query";
 
 const todoSchema = z.object({
   task: z.string().min(1, "Task description is required"),
@@ -11,6 +13,7 @@ const todoSchema = z.object({
 type TodoFormData = z.infer<typeof todoSchema>;
 
 export function Todoform() {
+  const queryClient = useQueryClient();
   const { data: categories } = useCategories();
 
   const {
@@ -21,8 +24,16 @@ export function Todoform() {
     { resolver: zodResolver(todoSchema) },
   );
 
-  const onSubmit = (data: TodoFormData) => {
-    console.log(data);
+  const onSubmit = async (data: TodoFormData) => {
+    try {
+      const response = await createTodo(data.task, data.categoryId);
+      console.log(response);
+      queryClient.invalidateQueries({
+        queryKey: ["todos"],
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -33,7 +44,7 @@ export function Todoform() {
           Select category
         </option>
         {categories?.map((category) => (
-          <option key={category.categoryId} value={category.categoryName}>
+          <option key={category.categoryId} value={category.categoryId}>
             {category.categoryName}
           </option>
         ))}

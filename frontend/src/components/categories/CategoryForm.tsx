@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import classes from "./CategoryForm.module.scss";
+import { createCategory } from "../../services/category-services";
+import { useQueryClient } from "@tanstack/react-query";
 
 const categorySchema = z.object({
   name: z.string().min(1, "Category name is required"),
@@ -10,14 +12,23 @@ const categorySchema = z.object({
 type CategoryFormData = z.infer<typeof categorySchema>;
 
 export function CategoryForm() {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<CategoryFormData>({ resolver: zodResolver(categorySchema) });
 
-  const onSubmit = (data: CategoryFormData) => {
-    console.log(data);
+  const onSubmit = async (data: CategoryFormData) => {
+    try {
+      const newCategory = await createCategory(data.name);
+      console.log(newCategory);
+      queryClient.invalidateQueries({
+        queryKey: ["categories"],
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
