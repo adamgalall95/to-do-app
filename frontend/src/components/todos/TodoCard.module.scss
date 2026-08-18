@@ -1,0 +1,95 @@
+.todoCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1em;
+
+  border: 0.0625em solid #ddd;
+  border-radius: 0.5em;
+
+  background-color: #fff;
+}
+
+.todoCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  flex: 1;
+}
+
+.todoCardTask {
+  width: 100%;
+
+  padding: 0.5em;
+
+  border: none;
+  border-bottom: 0.0625em solid #ddd;
+
+  background: transparent;
+
+  font-size: 1em;
+  font-family: inherit;
+
+  outline: none;
+}
+
+.todoCardTask:focus {
+  border-bottom-color: #333;
+}
+
+.todoCardCategory {
+  width: fit-content;
+
+  padding: 0.4em 0.75em;
+
+  border: 0.0625em solid #ddd;
+  border-radius: 0.375em;
+
+  background-color: #fff;
+
+  font-size: 0.875em;
+  font-family: inherit;
+
+  cursor: pointer;
+}
+
+.todoCardActions {
+  display: flex;
+  gap: 0.5em;
+
+  margin-left: 1em;
+}
+
+.todoCardButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 2.5em;
+  height: 2.5em;
+
+  padding: 0.5em;
+
+  border: none;
+  border-radius: 0.375em;
+
+  background-color: #eee;
+
+  font-size: 1em;
+
+  cursor: pointer;
+}
+
+.todoCardButton:hover {
+  background-color: #ddd;
+}
+
+.todoCardButtonCompleted {
+  background-color: #c8e6c9;
+}
+
+.todoCardDelete:hover {
+  background-color: #f5c6c6;
+}

@@ -1,0 +1,22 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "task": "Finish React project",
+      "categoryId": 1,
+      "completed": false
+    },
+    {
+      "id": 2,
+      "task": "Go to the gym",
+      "categoryId": 2,
+      "completed": true
+    },
+    {
+      "id": 3,
+      "task": "Study TypeScript",
+      "categoryId": 3,
+      "completed": false
+    }
+  ]
+}
