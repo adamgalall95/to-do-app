@@ -11,3 +11,22 @@ export const getTodos = async () => {
 
   return (await response.json()) as Todo[];
 };
+
+export const createTodo = async (task: string, categoryId: number) => {
+  const response = await fetch(BACKEND_URL + "/todos", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      task,
+      categoryId,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create task");
+  }
+
+  return (await response.json()) as Todo;
+};
