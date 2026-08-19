@@ -4,6 +4,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createTodo } from "../../services/task-services";
 import { useQueryClient } from "@tanstack/react-query";
+import classes from "./TodoForm.module.scss";
+import { formatText } from "../../utils/formatTexts";
 
 const todoSchema = z.object({
   task: z.string().min(1, "Task description is required"),
@@ -25,9 +27,12 @@ export function Todoform() {
   );
 
   const onSubmit = async (data: TodoFormData) => {
+    const cleanTask = formatText(data.task);
+
     try {
-      const response = await createTodo(data.task, data.categoryId);
+      const response = await createTodo(cleanTask, data.categoryId);
       console.log(response);
+
       queryClient.invalidateQueries({
         queryKey: ["todos"],
       });
@@ -37,22 +42,41 @@ export function Todoform() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("task")} />
-      <select {...register("categoryId")} defaultValue="">
+    <form className={classes.todoForm} onSubmit={handleSubmit(onSubmit)}>
+      <input
+        className={classes.todoForm__input}
+        type="text"
+        placeholder="What needs doing?"
+        {...register("task")}
+      />
+
+      <select
+        className={classes.todoForm__select}
+        {...register("categoryId")}
+        defaultValue=""
+      >
         <option value="" disabled>
           Select category
         </option>
+
         {categories?.map((category) => (
           <option key={category.categoryId} value={category.categoryId}>
             {category.categoryName}
           </option>
         ))}
       </select>
-      <button type="submit">Add</button>
-      {errors.task && <p>{errors.task.message}</p>}
 
-      {errors.categoryId && <p>{errors.categoryId.message}</p>}
+      <button className={classes.todoForm__button} type="submit">
+        Add
+      </button>
+
+      {errors.task && (
+        <p className={classes.todoForm__error}>{errors.task.message}</p>
+      )}
+
+      {errors.categoryId && (
+        <p className={classes.todoForm__error}>{errors.categoryId.message}</p>
+      )}
     </form>
   );
 }
