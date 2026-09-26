@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": { "type": "integer" },
+    "task": { "type": "string" },
+    "categoryId": { "type": "integer" },
+    "completed": { "type": "boolean" }
+  },
+  "required": ["id", "task", "categoryId", "completed"]
+}

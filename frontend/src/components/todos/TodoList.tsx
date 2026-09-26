@@ -3,67 +3,63 @@ import { TodoCard } from "./TodoCard";
 import classes from "./TodoList.module.scss";
 import { useTodos } from "../../hooks/useTodos";
 import { useCategories } from "../../hooks/useCategories";
-import {
-  deleteTodo,
-  updateTodo,
-  createTodo,
-} from "../../services/task-services";
-import { useQueryClient } from "@tanstack/react-query";
+import { useDeleteTodo } from "../../hooks/useDeleteTodo";
+import { useCreateTodo } from "../../hooks/useCreateTodo";
+import { useUpdateTodo } from "../../hooks/useUpdateTodo";
 
 export function TodoList() {
-  const { data: todos } = useTodos();
-  const { data: categories } = useCategories();
-  const queryClient = useQueryClient();
+  const { data: todos = [] } = useTodos();
+  const { data: categories = [] } = useCategories();
+
+  const { mutateAsync: deleteTodo } = useDeleteTodo();
+  const { mutateAsync: createTodo } = useCreateTodo();
+  const { mutateAsync: updateTodo } = useUpdateTodo();
 
   const handleDelete = async (id: number) => {
     await deleteTodo(id);
-    queryClient.invalidateQueries({
-      queryKey: ["todos"],
-    });
   };
 
   const handleDuplicate = async (todo: Todo) => {
-    await createTodo(todo.task, todo.categoryId);
-
-    queryClient.invalidateQueries({
-      queryKey: ["todos"],
+    await createTodo({
+      task: todo.task,
+      categoryId: todo.categoryId,
     });
   };
 
   const handleTaskChange = async (id: number, task: string) => {
-    await updateTodo(id, { task });
-    queryClient.invalidateQueries({
-      queryKey: ["todos"],
+    await updateTodo({
+      id,
+      data: { task },
     });
   };
 
   const handleCategoryChange = async (id: number, categoryId: number) => {
-    await updateTodo(id, { categoryId });
-    queryClient.invalidateQueries({
-      queryKey: ["todos"],
+    await updateTodo({
+      id,
+      data: { categoryId },
     });
   };
 
   const handleToggleComplete = async (id: number) => {
-    const todo = todos?.find((todo) => todo.id === id);
+    const todo = todos.find((todo) => todo.id === id);
 
     if (!todo) return;
 
-    await updateTodo(id, {
-      completed: !todo.completed,
-    });
-    queryClient.invalidateQueries({
-      queryKey: ["todos"],
+    await updateTodo({
+      id,
+      data: {
+        completed: !todo.completed,
+      },
     });
   };
 
   return (
     <section className={classes.todoList}>
-      {todos?.map((todo) => (
+      {todos.map((todo) => (
         <TodoCard
           key={todo.id}
           todo={todo}
-          categories={categories ?? []}
+          categories={categories}
           onDelete={handleDelete}
           onDuplicate={handleDuplicate}
           onTaskChange={handleTaskChange}

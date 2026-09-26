@@ -6,7 +6,8 @@ export const getTodos = async () => {
   const response = await fetch(BACKEND_URL + "/todos");
 
   if (!response.ok) {
-    throw new Error("Failed to fetch tasks");
+    const error = await response.json();
+    throw new Error(error.message);
   }
 
   return (await response.json()) as Todo[];
@@ -25,7 +26,8 @@ export const createTodo = async (task: string, categoryId: number) => {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to create task");
+    const error = await response.json();
+    throw new Error(error.message);
   }
 
   return (await response.json()) as Todo;
@@ -37,7 +39,8 @@ export const deleteTodo = async (id: number) => {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to delete task");
+    const error = await response.json();
+    throw new Error(error.message);
   }
 
   return response;
@@ -60,7 +63,8 @@ export const updateTodo = async (
   });
 
   if (!response.ok) {
-    throw new Error("Failed to update task");
+    const error = await response.json();
+    throw new Error(error.message);
   }
 
   return (await response.json()) as Todo;

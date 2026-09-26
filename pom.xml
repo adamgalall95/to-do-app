@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.1.0</version>
+		<version>4.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>io.nology</groupId>
-	<artifactId>to-do-api</artifactId>
+	<groupId>io.employee</groupId>
+	<artifactId>employee_app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>to-do-api</name>
+	<name>employee_app</name>
 	<description/>
 	<url/>
 	<licenses>
@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>21</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -54,6 +54,35 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Test Dependencies-->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>6.0.1</version>
+			<scope>test</scope>
+ 		</dependency>
+		  
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-path</artifactId>
+			<version>6.0.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<version>6.0.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.4.240</version>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
@@ -69,11 +98,10 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-				<!-- Model Mapper -->
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
-			<version>3.2.6</version>
+			<version>3.2.4</version>
 		</dependency>
 	</dependencies>
 
