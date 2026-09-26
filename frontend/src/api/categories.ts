@@ -1,4 +1,4 @@
-import type { Category } from "../types/todo";
+import type { Category } from "../types/category";
 
 export async function getCategories(): Promise<Category[]> {
   const response = await fetch("/data/categories.json");

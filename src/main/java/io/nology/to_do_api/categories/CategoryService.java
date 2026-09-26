@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import io.nology.to_do_api.categories.dtos.CreateCategoryDTO;
 import io.nology.to_do_api.categories.entities.Category;
+import io.nology.to_do_api.common.exceptions.DuplicateCategoryException;
+import io.nology.to_do_api.common.exceptions.NotFoundException;
 
 @Service
 public class CategoryService {
@@ -23,7 +25,21 @@ public class CategoryService {
     }
 
     public Category createCategory(CreateCategoryDTO data) {
+
+        boolean categoryExists = this.repo.existsByCategoryName(
+                data.getCategoryName());
+
+        if (categoryExists) {
+            throw new DuplicateCategoryException(
+                    data.getCategoryName());
+        }
         Category category = this.mapper.map(data, Category.class);
         return this.repo.save(category);
+    }
+
+    public Category getCategoryById(Long id) {
+        return this.repo.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        "Category with id " + id + " was not found"));
     }
 }

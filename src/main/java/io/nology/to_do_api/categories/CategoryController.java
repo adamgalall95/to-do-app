@@ -11,8 +11,10 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import io.nology.to_do_api.common.exceptions.NotFoundException;
 
 @RestController
 @RequestMapping("/categories")
@@ -28,6 +30,14 @@ public class CategoryController {
     public ResponseEntity<List<Category>> findAllCategory() {
         List<Category> categories = this.categoryService.getAll();
         return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
+
+        Category category = this.categoryService.getCategoryById(id);
+
+        return ResponseEntity.ok(category);
     }
 
     @PostMapping()

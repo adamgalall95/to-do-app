@@ -6,4 +6,5 @@ import io.nology.to_do_api.categories.entities.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
+    boolean existsByCategoryName(String categoryName);
 }

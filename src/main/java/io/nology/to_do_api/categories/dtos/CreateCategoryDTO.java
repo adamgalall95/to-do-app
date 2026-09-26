@@ -1,10 +1,10 @@
 package io.nology.to_do_api.categories.dtos;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public class CreateCategoryDTO {
 
-    @NotNull
+    @NotBlank
     private String categoryName;
 
     public CreateCategoryDTO() {

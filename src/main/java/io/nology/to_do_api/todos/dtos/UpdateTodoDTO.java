@@ -22,4 +22,16 @@ public class UpdateTodoDTO {
     public Boolean getCompleted() {
         return completed;
     }
+
+    public void setTask(String task) {
+        this.task = task;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
 }

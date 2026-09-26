@@ -6,15 +6,14 @@ export const getCategories = async () => {
   const response = await fetch(BACKEND_URL + "/categories");
 
   if (!response.ok) {
-    throw new Error("Failed to fetch categories");
+    const error = await response.json();
+    throw new Error(error.message);
   }
 
   return (await response.json()) as Category[];
 };
 
-export const createCategory = async (
-  categoryName: string,
-): Promise<Category> => {
+export const createCategory = async (categoryName: string) => {
   const response = await fetch(BACKEND_URL + "/categories", {
     method: "POST",
     headers: {
@@ -24,7 +23,8 @@ export const createCategory = async (
   });
 
   if (!response.ok) {
-    throw new Error("Failed to create category");
+    const error = await response.json();
+    throw new Error(error.message);
   }
 
   return (await response.json()) as Category;

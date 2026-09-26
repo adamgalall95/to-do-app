@@ -1,0 +1,2 @@
+DELETE FROM todo;
+DELETE FROM category;
