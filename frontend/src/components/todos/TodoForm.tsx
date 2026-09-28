@@ -5,13 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import classes from "./TodoForm.module.scss";
 import { formatText } from "../../utils/formatTexts";
 import { useCreateTodo } from "../../hooks/useCreateTodo";
-
-const todoSchema = z.object({
-  task: z.string().trim().min(1, "Task description is required"),
-  categoryId: z.coerce.number().min(1, "Category is required"),
-});
-
-type TodoFormData = z.infer<typeof todoSchema>;
+import { todoSchema, type TodoFormData } from "../../schemas/todoSchema";
 
 export function Todoform() {
   const { data: categories } = useCategories();
