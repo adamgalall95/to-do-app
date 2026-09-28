@@ -1,15 +1,12 @@
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import classes from "./CategoryForm.module.scss";
 import { useCreateCategory } from "../../hooks/useCreateCategory";
 import { useCategories } from "../../hooks/useCategories";
-
-const categorySchema = z.object({
-  name: z.string().trim().min(1, "Category name is required"),
-});
-
-type CategoryFormData = z.infer<typeof categorySchema>;
+import {
+  categorySchema,
+  type CategoryFormData,
+} from "../../schemas/categorySchema";
 
 export function CategoryForm() {
   const { data: categories = [] } = useCategories();
