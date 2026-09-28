@@ -1,143 +1,289 @@
-# Todo App
+# Full-Stack Todo Management App
 
-## Overview
+![Backend Tests](https://github.com/adamgalall95/to-do-app/actions/workflows/maven.yaml/badge.svg)
 
-Todo App is a full-stack task management application that allows users to create and manage tasks, organise them into categories, and update or delete existing tasks.
+![Frontend Tests](https://github.com/adamgalall95/to-do-app/actions/workflows/node.js.yaml/badge.svg)
 
-The project was built to strengthen my full-stack development skills by working with React and TypeScript on the frontend, Spring Boot on the backend, MySQL for data persistence, REST APIs, form validation, and asynchronous data management.
+A full-stack **Todo Management System** built with React, TypeScript, Spring Boot and MySQL.
 
-## Screenshot
+The system allows users to create new todo tasks, manage categories, update tasks, mark tasks as complete, duplicate tasks and remove tasks when required.
 
-![Todo App Screenshot](./screenshot.png)
+## Demo & Snippets
 
-## Features
+### Todo List
 
-- Add new task categories
-- Add new tasks and assign them to a category
-- Update task names and categories
-- Delete tasks
-- Display tasks organised by category
-- Persistent data storage using MySQL
-- REST API for managing categories and todos
-- Form validation with Zod
-- API state management with React Query
-- Responsive styling using SCSS
+![Todo List](screenshot.png)
 
-## Built With
+- **Hosted link:** TBC
 
-### Frontend
+The app allows users to create, view, update, categorise, complete, duplicate and delete todos.
+
+---
+
+## Requirements / Purpose
+
+### MVP
+
+The MVP provides users with the ability to:
+
+- Add new todo tasks
+- Create new categories
+- View todo records
+- Assign todos to categories
+- Update todo information
+- Change todo categories
+- Mark todos as complete or incomplete
+- Duplicate todo tasks
+- Delete todo records
+- Validate todo and category information
+- Handle API errors
+
+### Tech Stack
+
+**Frontend**
 
 - React
 - TypeScript
-- Vite
 - React Query
 - React Hook Form
 - Zod
 - SCSS Modules
+- Vite
 
-### Backend
+**Backend**
 
 - Java
 - Spring Boot
 - Spring Data JPA
 - MySQL
-- REST API
 
-## Key Concepts
-
-### Frontend
-
-- React components
-- Props
-- State management
-- Custom hooks
-- TypeScript types
-- React Query
-- API requests
-- Mutations and query invalidation
-- React Hook Form
-- Schema validation with Zod
-- Conditional rendering
-
-### Backend
-
-- RESTful API design
-- Controllers
-- Services
-- Repositories
-- Entities
-- DTOs
-- Model mapping
-- JPA relationships
-- CRUD operations
-- MySQL database relationships
-- HTTP status codes
-
-## How It Works
-
-1. The user creates a category for their tasks.
-2. The category is sent to the Spring Boot API and stored in MySQL.
-3. The user creates a todo and assigns it to an existing category.
-4. The frontend sends the todo data to the API.
-5. The API stores the todo and its relationship with the category in the database.
-6. React Query retrieves and manages the todo and category data.
-7. Users can update a todo's name or category.
-8. Users can delete todos when they are no longer needed.
-
-## API Endpoints
-
-### Categories
-
-- `GET /categories` — retrieve all categories
-- `POST /categories` — create a category
-- `PATCH /categories/:id` — update a category
-- `DELETE /categories/:id` — delete a category
-
-### Todos
-
-- `GET /todos` — retrieve all todos
-- `GET /todos/:id` — retrieve a specific todo
-- `POST /todos` — create a todo
-- `PATCH /todos/:id` — update a todo
-- `DELETE /todos/:id` — delete a todo
-
-## Database Structure
-
-The application uses separate database tables for **categories** and **todos**.
-
-Each todo is associated with a category through a foreign-key relationship.
-
-```text
-Category
-│
-├── id
-└── name
-      │
-      └── Todo
-          ├── id
-          ├── name
-          └── category_id
-```
-
-## Testing
-
-Testing is planned as a future improvement using:
+**Testing**
 
 - Vitest
 - React Testing Library
-- Jest DOM
-- User Event
+- JUnit
+- Mockito
+- REST Assured
+- H2
 
-## Future Improvements
+### Why this stack?
 
-- Filter todos by category
-- Add a task summary showing the number of todos in each category
-- Add the ability to update and delete categories
-- Implement soft deletion using an `isArchived` field
-- Add authentication and user accounts
-- Improve API error handling
-- Add additional backend integration tests
+React and TypeScript provide the frontend, while React Query handles communication with the backend.
+
+Spring Boot provides the REST API and JPA handles database access.
+
+Zod and React Hook Form are used for form validation. The backend also validates requests and handles business rules before todo information is saved.
+
+## Database Schema
+
+### Category
+
+| Field          | Data Type |
+| -------------- | --------- |
+| `categoryId`   | `BIGINT`  |
+| `categoryName` | `VARCHAR` |
+
+### Todo
+
+| Field        | Data Type |
+| ------------ | --------- |
+| `id`         | `BIGINT`  |
+| `task`       | `VARCHAR` |
+| `categoryId` | `BIGINT`  |
+| `completed`  | `BOOLEAN` |
 
 ---
 
-This project was completed as part of the **\_nology Software Engineering program**.
+## Build Steps
+
+### Backend
+
+From the project root:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Make sure MySQL is running and the database configuration in `application.properties` matches your local setup.
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend uses the backend API to connect to the backend.
+
+### Tests
+
+Frontend:
+
+```bash
+npm test -- --run
+```
+
+Backend:
+
+```bash
+./mvnw test
+```
+
+---
+
+## Design Goals / Approach
+
+The main goal was to build a practical Todo management system and understand how todo information moves through a complete full-stack application.
+
+```text
+React Form
+    ↓
+Zod Validation
+    ↓
+React Query
+    ↓
+API Request
+    ↓
+Spring Boot Controller
+    ↓
+Service
+    ↓
+JPA Repository
+    ↓
+MySQL
+```
+
+Key design decisions:
+
+- Keep frontend and backend validation separate.
+- Use React Query for server state.
+- Use React Hook Form for form management.
+- Use Zod for frontend validation.
+- Keep business rules in the backend service layer.
+- Use a global exception handler for consistent API errors.
+- Keep components and services separated so the code is easier to test and maintain.
+
+---
+
+## Features
+
+- Todo CRUD operations
+- Category creation
+- Todo categorisation
+- Todo completion
+- Todo duplication
+- React Query for API state
+- React Hook Form
+- Zod validation
+- Backend validation
+- Global API error handling
+- Unit tests
+- REST API tests
+- Frontend component tests
+- MySQL persistence
+
+### Validation Rules
+
+Examples of rules implemented include:
+
+- Todo descriptions cannot be empty.
+- Todo descriptions are trimmed before validation.
+- A category must be selected.
+- Category names cannot be empty.
+- Category names containing only whitespace are rejected.
+- Duplicate categories are prevented.
+
+---
+
+## Known Issues
+
+- The application is not currently deployed.
+- Delete todo currently does not have a confirmation step.
+- Search, filtering and pagination are not yet implemented.
+
+---
+
+## Future Goals
+
+- Add todo search and filtering.
+- Add pagination.
+- Add confirmation before deleting todos.
+- Add authentication and authorisation.
+- Deploy the frontend and backend.
+- Add more frontend and backend test coverage.
+
+---
+
+## Change Logs
+
+### 28/09/2026 — Frontend Testing
+
+- Added frontend tests.
+- Added component tests using React Testing Library.
+- Added unit tests for todo validation.
+- Added unit tests for category validation.
+- Added unit tests for frontend utility functions.
+
+### 26/09/2026 — Backend Testing & Error Handling
+
+- Added backend testing.
+- Added service unit tests.
+- Added REST API tests.
+- Added JSON response validation.
+- Added H2 test database configuration.
+- Added custom exceptions.
+- Added global exception handling.
+
+### 22/08/2026 — README & Project Polish
+
+- Added project documentation.
+- Added README.
+- Polished the project structure and presentation.
+
+### 19/08/2026 — Todo Management
+
+- Added todo update functionality.
+- Added todo delete functionality.
+- Added todo duplication functionality.
+- Added todo completion functionality.
+- Added styling and UI improvements.
+
+### 18/08/2026 — Categories & Todo Creation
+
+- Added category creation functionality.
+- Added todo creation functionality.
+- Connected the frontend to the backend API.
+
+### 18/08/2026 — Project Initialisation
+
+- Created the initial full-stack Todo application.
+- Set up the React frontend.
+- Set up the Spring Boot backend.
+- Connected the application to MySQL.
+
+---
+
+## What did you struggle with?
+
+### Working with related data
+
+Managing the relationship between todos and categories.
+
+Each todo needs a valid category, so the frontend needs to retrieve the available categories, display them to the user and send the correct `categoryId` when creating or updating a todo.
+
+### Frontend testing
+
+Testing the frontend required understanding which parts of the application were worth testing rather than trying to test every line of code.
+
+Component tests were used for important user interactions, while unit tests were used for isolated functionality such as validation schemas and utility functions.
+
+This helped develop a more focused approach to testing based on user behaviour and application functionality.
+
+---
+
+## Licensing Details
+
+No open-source license has currently been added to the project.
+
+---
