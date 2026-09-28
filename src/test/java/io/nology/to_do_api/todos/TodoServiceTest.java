@@ -19,8 +19,6 @@ import io.nology.to_do_api.categories.CategoryRepository;
 import io.nology.to_do_api.categories.entities.Category;
 import io.nology.to_do_api.common.exceptions.CategoryNotFoundException;
 import io.nology.to_do_api.common.exceptions.TodoNotFoundException;
-import io.nology.to_do_api.todos.TodoRepository;
-import io.nology.to_do_api.todos.TodoService;
 import io.nology.to_do_api.todos.dtos.CreateTodoDTO;
 import io.nology.to_do_api.todos.dtos.UpdateTodoDTO;
 import io.nology.to_do_api.todos.entities.Todo;
